@@ -1,4 +1,4 @@
-name: Deploy Hardware Communication Microservice
+name: Deploy Hardware Communication Microservice #name
 
 on:
   push:
