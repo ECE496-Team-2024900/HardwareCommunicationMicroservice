@@ -21,5 +21,7 @@ from hardwarecommserver import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index)
+    path('', views.index),
+    path('approval', views.treatment_approval),
+    path('status', views.treatment_approval_status)
 ]
