@@ -6,14 +6,14 @@ def index(request):
     return JsonResponse({"message": "This is the hardware communication microservice"})
 
 # Packet format: "approval+{random_number_R}+{counter}"
-# TO-DO: Need keys to sign packet
+# TO-DO: Need keys to sign packet and update logic once handshake counter is implemented
 @api_view(['GET'])
 def treatment_approval(request):
     treatment_id = request.GET['id']
     if treatment_id is None:
         return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
     try:
-        treatment_information = requests.get('SET_URL')
+        treatment_information = requests.get(f"{TREATMENT_SERVICE_BASE_URL}/treatment/parameters/get/id={treatment_id}")
         packet_string = f"approval+{treatment_information['handshake_random_string']}+{treatment_information['handshake_counter']+1}"
         channel_layer = get_channel_layer()
 
@@ -24,6 +24,8 @@ def treatment_approval(request):
     except Exception as e:
         return JsonResponse({'message':str(e)}, status=500)
 
+
+@api_view(['GET'])
 def treatment_approval_status(request):
     treatment_id = request.GET['id']
     if treatment_id is None:

@@ -130,3 +130,10 @@ CACHES = {
         'LOCATION': 'unique-snowflake',
     }
 }
+
+DJANGO_ENV = os.getenv('DJANGO_ENV', 'development')
+
+if DJANGO_ENV == 'production':
+    TREATMENT_SERVICE_BASE_URL = 'ADD DEPLOYED URL'
+else:
+    TREATMENT_SERVICE_BASE_URL = 'http://localhost:8000'
