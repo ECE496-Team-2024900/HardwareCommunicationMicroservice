@@ -1,6 +1,8 @@
 from django.http import JsonResponse
 import requests
 from django.core.cache import cache
+from rest_framework.decorators import api_view
+
 
 def index(request):
     return JsonResponse({"message": "This is the hardware communication microservice"})
