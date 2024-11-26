@@ -131,6 +131,8 @@ CACHES = {
     }
 }
 
+import os
+
 DJANGO_ENV = os.getenv('DJANGO_ENV', 'development')
 
 if DJANGO_ENV == 'production':
