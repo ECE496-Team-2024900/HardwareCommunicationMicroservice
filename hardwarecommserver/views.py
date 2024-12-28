@@ -22,7 +22,7 @@ def treatment_approval(request):
         # Setting cache expiry to 5 minutes - approval shouldn't remain here indefinitely or for too long
         cache.set(f'treatment_approval_{treatment_id}', packet_string, timeout=300) 
 
-        return JsonResponse({'message': 'Approval recieved'}, status=200)
+        return JsonResponse({'message': 'Approval received'}, status=200)
     except Exception as e:
         return JsonResponse({'message':str(e)}, status=500)
 
