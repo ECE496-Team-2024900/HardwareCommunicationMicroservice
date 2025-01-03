@@ -7,6 +7,7 @@ from rest_framework.decorators import api_view
 def index(request):
     return JsonResponse({"message": "This is the hardware communication microservice"})
 
+# Used for clinicians to sent their treatment approval
 # Packet format: "approval+{random_number_R}+{counter}"
 # TO-DO: Need keys to sign packet and update logic once handshake counter is implemented
 @api_view(['GET'])
@@ -26,13 +27,14 @@ def treatment_approval(request):
     except Exception as e:
         return JsonResponse({'message':str(e)}, status=500)
 
-
+# Used for patient's app to check if clinician has approved treatment
 @api_view(['GET'])
 def treatment_approval_status(request):
     treatment_id = request.GET['id']
     if treatment_id is None:
         return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
     try:
+        # Checking if the approval exists in the cache
         packet_string = cache.get(f'treatment_approval_{treatment_id}')
         if packet_string:
             return JsonResponse({'packet': packet_string}, status=200)
