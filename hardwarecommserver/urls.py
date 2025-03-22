@@ -23,5 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('hardware/approval', views.treatment_approval),
-    path('hardware/status', views.treatment_approval_status)
+    path('hardware/status', views.treatment_approval_status),
+    path('hardware/remove', views.remove_treatment_approval),
+    path('hardware/get_sensor_data_updates', views.get_sensor_data_updates),
+    path('hardware/set_sensor_data_updates', views.set_sensor_data_updates),
+    path('hardware/remove_sensor_data', views.remove_sensor_data)
 ]
