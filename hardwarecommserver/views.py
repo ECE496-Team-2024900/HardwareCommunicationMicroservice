@@ -61,7 +61,7 @@ def treatment_approval_status(request):
         packet_string = cache.get(f'treatment_approval_{treatment_id}')
         if packet_string:
             return JsonResponse({'message': packet_string}, status=200)
-        return JsonResponse({'message':'Approval not recieved'}, status=204)
+        return JsonResponse({'message':'Approval not recieved'}, status=200)
     except Exception as e:
         return JsonResponse({'message':str(e)}, status=500)
 
@@ -89,7 +89,7 @@ def get_sensor_data_updates(request):
         data = cache.get(f'sensor_data_{treatment_id}') 
         if packet_string:
             return JsonResponse({'message': data}, status=200)
-        return JsonResponse({'message':'No data'}, status=204)
+        return JsonResponse({'message':'No data'}, status=200)
     except Exception as e:
         return JsonResponse({'message':str(e)}, status=500)
 
