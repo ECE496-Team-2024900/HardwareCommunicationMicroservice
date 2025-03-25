@@ -50,6 +50,18 @@ def remove_sensor_data(request):
     except Exception as e:
         return JsonResponse({'message':str(e)}, status=500)
 
+@api_view(['GET'])
+def remove_treatment_progress(request):
+    treatment_id = request.GET['id']
+    if treatment_id is None:
+        return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
+    try:
+        cache.delete(f'treatment_progress_{treatment_id}') 
+
+        return JsonResponse({'message': 'Sensor data removed'}, status=200)
+    except Exception as e:
+        return JsonResponse({'message':str(e)}, status=500)
+
 # Used for patient's app to check if clinician has approved treatment
 @api_view(['GET'])
 def treatment_approval_status(request):
@@ -77,6 +89,34 @@ def set_sensor_data_updates(request):
         cache.set(f'sensor_data_{treatment_id}', cache_value, timeout=300) 
 
         return JsonResponse({'message': 'Sensor data received'}, status=200)
+    except Exception as e:
+        return JsonResponse({'message':str(e)}, status=500)
+
+@api_view(['PUT'])
+def set_treatment_progress(request):
+    treatment_id = request.GET['id']
+    if treatment_id is None:
+        return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
+    try:
+        cache_value = json.loads(request.body).get("data")
+
+        # Setting cache expiry to 5 minutes
+        cache.set(f'treatment_progress_{treatment_id}', cache_value, timeout=300) 
+
+        return JsonResponse({'message': 'Treatment progress received'}, status=200)
+    except Exception as e:
+        return JsonResponse({'message':str(e)}, status=500)
+
+@api_view(['GET'])
+def get_treatment_progress(request):
+    treatment_id = request.GET['id']
+    if treatment_id is None:
+        return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
+    try:
+        data = cache.get(f'treatment_progress_{treatment_id}') 
+        if packet_string:
+            return JsonResponse({'message': data}, status=200)
+        return JsonResponse({'message':'No data'}, status=200)
     except Exception as e:
         return JsonResponse({'message':str(e)}, status=500)
 
