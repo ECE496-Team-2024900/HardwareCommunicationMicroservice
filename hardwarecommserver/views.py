@@ -104,13 +104,20 @@ def set_sensor_data_updates(request):
     except Exception as e:
         return JsonResponse({'message':str(e)}, status=500)
 
-@api_view(['PUT'])
+@api_view(['GET'])
 def set_treatment_pause(request):
     treatment_id = request.GET['id']
+    treatment_status = request.GET['status']
     if treatment_id is None:
         return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
     try:
-        cache_value = json.loads(request.body).get("data")
+        if treatment_status == "pause":
+            cache_value = "Pause"
+        elif treatment_status == "resume":
+            cache_value = "Resume"
+        else:
+            return JsonResponse({'message':'Unknown status - can only pause or resume'}, status=404)
+
 
         # Setting cache expiry to 5 minutes
         cache.set(f'treatment_pause_{treatment_id}', cache_value, timeout=300) 
