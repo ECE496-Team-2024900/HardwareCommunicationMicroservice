@@ -2,6 +2,7 @@ from django.http import JsonResponse
 import requests
 from django.core.cache import cache
 from rest_framework.decorators import api_view
+import json
 
 
 def index(request):
