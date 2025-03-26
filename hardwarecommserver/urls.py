@@ -23,5 +23,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
     path('hardware/approval', views.treatment_approval),
-    path('hardware/status', views.treatment_approval_status)
+    path('hardware/status', views.treatment_approval_status),
+    path('hardware/remove', views.remove_treatment_approval),
+    path('hardware/get_sensor_data_updates', views.get_sensor_data_updates),
+    path('hardware/set_sensor_data_updates', views.set_sensor_data_updates),
+    path('hardware/get_treatment_progress', views.get_treatment_progress),
+    path('hardware/set_treatment_progress', views.set_treatment_progress),
+    path('hardware/set_treatment_pause', views.set_treatment_pause),
+    path('hardware/get_treatment_pause', views.get_treatment_pause),
+    path('hardware/remove_sensor_data', views.remove_sensor_data),
+    path('hardware/remove_treatment_progress', views.remove_treatment_progress),
+    path('hardware/remove_treatment_pause', views.remove_treatment_pause)
 ]
