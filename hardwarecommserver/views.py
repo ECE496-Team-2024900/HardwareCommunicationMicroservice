@@ -96,10 +96,10 @@ def set_sensor_data_updates(request):
         return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
     try:
         cache_value = json.loads(request.body).get("data")
-
-        # Setting cache expiry to 5 minutes
-        cache.set(f'sensor_data_{treatment_id}', cache_value, timeout=300) 
-
+        existing_value = cache.get(f'sensor_data_{treatment_id}') 
+        if existing_value:
+            # Setting cache expiry to 5 minutes
+            cache.set(f'sensor_data_{treatment_id}', f'{existing_value}\n{cache_value}', timeout=300) 
         return JsonResponse({'message': 'Sensor data received'}, status=200)
     except Exception as e:
         return JsonResponse({'message':str(e)}, status=500)
