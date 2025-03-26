@@ -133,7 +133,7 @@ def get_treatment_pause(request):
         return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
     try:
         data = cache.get(f'treatment_pause_{treatment_id}') 
-        if packet_string:
+        if data:
             return JsonResponse({'message': data}, status=200)
         return JsonResponse({'message':'No data'}, status=200)
     except Exception as e:
@@ -161,7 +161,7 @@ def get_treatment_progress(request):
         return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
     try:
         data = cache.get(f'treatment_progress_{treatment_id}') 
-        if packet_string:
+        if data:
             return JsonResponse({'message': data}, status=200)
         return JsonResponse({'message':'No data'}, status=200)
     except Exception as e:
@@ -174,7 +174,7 @@ def get_sensor_data_updates(request):
         return JsonResponse({'message':'Please provide a treatment ID'}, status=400)
     try:
         data = cache.get(f'sensor_data_{treatment_id}') 
-        if packet_string:
+        if data:
             return JsonResponse({'message': data}, status=200)
         return JsonResponse({'message':'No data'}, status=200)
     except Exception as e:
